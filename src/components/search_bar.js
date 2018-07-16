@@ -13,10 +13,20 @@ class SearchBar extends Component {
         //whenever the user interacts with this input bar it emits a change method
         //to envoke JS code write "on" then th name then the name of the function
         //state is set to the term
-        return <input onChange={event => this.setState({term: event.target.value})} />;
+    return (
+        <div className="search-bar">
+
+            <input 
+                value={this.state.term}
+                onChange={event => this.onInputChange(event.target.value)} 
+            />
+            
+        </div>
+    );
 
         //this is the old way to use the event, calling the onInputChange method
         // return <input onChange={this.onInputChange} />;
+
     }
     //either handle or on then the name of the event, is the naming convention
     //it's passed an event object because of the event change
@@ -24,6 +34,10 @@ class SearchBar extends Component {
     // onInputChange(event) {
     //     console.log(event.target.value)
     // }
+    onInputChange(term){
+        this.setState({term});
+        this.props.onSearchTermChange(term);
+    }
 }
 
 export default SearchBar;
