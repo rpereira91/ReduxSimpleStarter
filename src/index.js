@@ -1,3 +1,5 @@
+import Lodash from 'lodash'
+// could also be  'import from _ from 'lodash''
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search'
@@ -25,7 +27,7 @@ class App extends Component {
             videos: [],
             selectedVideo: null
              };
-    this.videoSearch('test');
+    this.videoSearch('reactjs');
 
     }
     videoSearch(term) {
@@ -41,14 +43,19 @@ class App extends Component {
         });
     }
     render () {
+        //function that gets passed to debounce, it creates a new function that can only be called every 300 ms
+        //it passes video search every 300 ms to the onsearchterm change
+        const videoSearch = _.debounce((term) => {this.videoSearch(term)}, 300)
         return (
-        <div> 
-            <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
-            <VideoDetail video={this.state.selectedVideo} />
-            <VideoList 
-                onVideoSelect={selectedVideo => this.setState({selectedVideo})}
-                videos={this.state.videos}/>
-        {/* passing props to the video list */}
+        <div className="mainBody">
+            <div > 
+                <SearchBar onSearchTermChange={videoSearch}/>
+                <VideoDetail video={this.state.selectedVideo} />
+                <VideoList 
+                    onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+                    videos={this.state.videos}/>
+            {/* passing props to the video list */}
+            </div>
         </div>);
     }
 }

@@ -24,3 +24,7 @@
 .list-group-item:hover{
     background-color: #a59e9e;
 }
+
+.container{
+    background-color: gray;
+}
